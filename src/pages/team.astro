@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Layout from "../components/Layout.astro";
+
+const [entry] = await getCollection("team");
+---
+
+<Layout title="Custom SDK collection">
+  <p class="eyebrow">arena.client() · custom collection</p>
+  <h1>{entry?.data.resource.name ?? "Are.na user"}</h1>
+  <p class="lede">This page uses <code>client.users.get()</code> inside <code>defineCollection()</code>.</p>
+  {entry && <pre>{JSON.stringify(entry.data.resource, null, 2)}</pre>}
+</Layout>

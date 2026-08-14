@@ -1,0 +1,29 @@
+---
+export const prerender = true;
+
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import Layout from "../../components/Layout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("references", ({ data }) => data.type !== "Channel");
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<"references">;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const image = "image" in entry.data ? entry.data.image?.large?.src : undefined;
+---
+
+<Layout title={entry.data.title || `Block ${entry.id}`}>
+  <article class="content">
+    <p class="eyebrow">Static channel entry · {entry.id}</p>
+    <h1>{entry.data.title || entry.data.type}</h1>
+    {image && <img src={image} alt={("image" in entry.data && entry.data.image?.alt_text) || ""} />}
+    <Content />
+    <pre>{JSON.stringify(entry.data.connection, null, 2)}</pre>
+  </article>
+</Layout>

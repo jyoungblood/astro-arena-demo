@@ -1,0 +1,24 @@
+---
+import { getLiveCollection } from "astro:content";
+import ChannelContent from "../components/ChannelContent.astro";
+import Layout from "../components/Layout.astro";
+
+const { entries, error, cacheHint } = await getLiveCollection("liveReferences", { page: 1 });
+const liveEntries = entries ?? [];
+---
+
+<Layout title="Live channel">
+  <ChannelContent
+    entries={liveEntries}
+    eyebrow="Live channel loader"
+    title="Request-time references"
+  >
+    {!error && (
+      <p slot="status" class="lede">The server loaded {liveEntries.length} entries. Cache tags: {cacheHint?.tags?.join(", ") ?? "none"}</p>
+    )}
+    <p slot="status">
+      Astro loads this collection on the server for each request. It does not run in browser JavaScript. This route requires on-demand rendering and a server adapter. <a href="https://docs.astro.build/en/guides/content-collections/#live-content-collections">Read the Astro live content guide.</a>
+    </p>
+    {error && <p slot="status" class="notice">{error.message}</p>}
+  </ChannelContent>
+</Layout>

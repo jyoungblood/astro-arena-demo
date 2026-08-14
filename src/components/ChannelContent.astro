@@ -1,0 +1,49 @@
+---
+import type { ArenaEntryData } from "astro-arena";
+import ResourceCard from "./ResourceCard.astro";
+
+interface ChannelEntry {
+  data: ArenaEntryData;
+  id: string;
+}
+
+interface Props {
+  blockHrefBase?: string;
+  class?: string;
+  description?: string | undefined;
+  entries: readonly ChannelEntry[];
+  eyebrow: string;
+  title: string;
+}
+
+const {
+  blockHrefBase,
+  class: className,
+  description,
+  entries,
+  eyebrow,
+  title,
+} = Astro.props;
+---
+
+<section class:list={["channel-content", className]}>
+  <header class="channel-header">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    {description && <p class="lede">{description}</p>}
+  </header>
+  <slot name="status" />
+  {entries.length > 0 && (
+    <div class="grid">
+      {entries.map((entry) => (
+        <ResourceCard
+          data={entry.data}
+          id={entry.id}
+          href={blockHrefBase && entry.data.type !== "Channel"
+            ? `${blockHrefBase}/${entry.id}`
+            : undefined}
+        />
+      ))}
+    </div>
+  )}
+</section>

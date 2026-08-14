@@ -1,0 +1,23 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import ChannelContent from "../components/ChannelContent.astro";
+import Layout from "../components/Layout.astro";
+
+const entries = await getCollection("privateReferences");
+const [channel] = await getCollection("privateChannel");
+const title = channel?.data.resource.title ?? "Private channel";
+const description = channel?.data.resource.description?.plain;
+---
+
+<Layout title={title}>
+  <ChannelContent
+    description={description}
+    entries={entries}
+    eyebrow="Private channel loader"
+    title={title}
+  >
+    <p slot="status" class="notice">The build contains {entries.length} private entries. Inspect all output before deployment.</p>
+  </ChannelContent>
+</Layout>

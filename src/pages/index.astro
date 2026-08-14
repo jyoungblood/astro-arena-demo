@@ -1,0 +1,22 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import ChannelContent from "../components/ChannelContent.astro";
+import Layout from "../components/Layout.astro";
+
+const references = await getCollection("references");
+const [channel] = await getCollection("channel");
+const title = channel?.data.resource.title ?? "Channel";
+const description = channel?.data.resource.description?.plain;
+---
+
+<Layout title={title}>
+  <ChannelContent
+    blockHrefBase="/blocks"
+    description={description}
+    entries={references}
+    eyebrow="Static channel loader"
+    title={title}
+  />
+</Layout>

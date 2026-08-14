@@ -1,0 +1,20 @@
+---
+import type { ArenaEntryData } from "astro-arena";
+
+interface Props {
+  data: ArenaEntryData;
+  href?: string | undefined;
+  id: string;
+}
+
+const { data, href, id } = Astro.props;
+const image = "image" in data ? data.image?.medium?.src : undefined;
+const label = data.title || `${data.type} ${data.id}`;
+const Tag = href ? "a" : "article";
+---
+
+<Tag class="card" href={href}>
+  {image && <img src={image} alt={("image" in data && data.image?.alt_text) || ""} />}
+  <span class="eyebrow">{data.type} · {id}</span>
+  <h2>{label}</h2>
+</Tag>

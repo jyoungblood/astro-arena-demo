@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="A playground for the astro-arena content loaders" />
+    <title>{title} · astro-arena</title>
+    <style is:global>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: #161616;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      a { color: inherit; }
+      body > header, main { width: min(1100px, calc(100% - 2rem)); margin-inline: auto; }
+      body > header { display: flex; gap: 1rem; align-items: baseline; justify-content: space-between; padding: 1.5rem 0; }
+      nav { display: flex; flex-wrap: wrap; gap: .8rem; font-size: .9rem; }
+      main { padding: 3rem 0 6rem; }
+      h1 { max-width: 14ch; font-size: clamp(2.5rem, 8vw, 6rem); line-height: .95; letter-spacing: -.06em; margin: 0 0 1rem; }
+      .lede { max-width: 60ch; color: #555; font-size: 1.1rem; margin-bottom: 3rem; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; }
+      .card { display: grid; align-content: start; gap: .75rem; min-height: 12rem; padding: 1rem; border: 1px solid #222;  text-decoration: none; }
+      .card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #ddd; }
+      .card h2 { font-size: 1rem; margin: 0; }
+      .eyebrow { font: 700 .7rem/1 ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; color: #777; }
+      .content { max-width: 720px; }
+      .content img { max-width: 100%; height: auto; }
+      .notice { padding: 1rem; border: 1px solid #d49b45; background: #fff4d9; }
+      code { font-family: ui-monospace, monospace; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/"><strong>astro-arena</strong></a>
+      <nav aria-label="Main navigation">
+        <a href="/">Channel</a>
+        <a href="/featured">Block</a>
+        <a href="/live">Live</a>
+        <a href="/team">SDK</a>
+        <a href="/private">Private</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
