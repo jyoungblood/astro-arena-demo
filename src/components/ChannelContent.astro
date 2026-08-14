@@ -34,16 +34,18 @@ const {
   </header>
   <slot name="status" />
   {entries.length > 0 && (
-    <div class="grid">
-      {entries.map((entry) => (
-        <ResourceCard
-          data={entry.data}
-          id={entry.id}
-          href={blockHrefBase && entry.data.type !== "Channel"
-            ? `${blockHrefBase}/${entry.id}`
-            : undefined}
-        />
-      ))}
+    <div class="channel-gallery">
+      <div class="grid">
+        {entries.map((entry) => (
+          <ResourceCard
+            data={entry.data}
+            id={entry.id}
+            href={blockHrefBase && entry.data.type !== "Channel"
+              ? `${blockHrefBase}/${entry.id}`
+              : undefined}
+          />
+        ))}
+      </div>
     </div>
   )}
 </section>

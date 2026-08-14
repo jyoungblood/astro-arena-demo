@@ -13,7 +13,7 @@ const client = arena.client();
 const references = defineCollection({
   loader: arena.channel({
     url: `https://www.are.na/j-youngblood/${CHANNEL_ID}`,
-    query: { page: 1, per: 12, sort: "position_desc" },
+    query: { page: 1, per: 60, sort: "position_desc" },
     includeChannels: true,
   }),
 });

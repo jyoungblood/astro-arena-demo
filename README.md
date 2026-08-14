@@ -1,24 +1,23 @@
 # astro-arena playground
 
-This Astro 7 application uses the local `../astro-arena` package.
+This Astro 7 application 
 
 ## Install
 
-Build the package first.
-
 ```sh
-cd ../astro-arena
-npm install
-npm run build
-```
-
-Then install and run the playground.
-
-```sh
-cd ../astro-arena-playground
+npx degit jyoungblood/astro-arena-demo .
 npm install
 npm run dev
 ```
+
+
+
+
+note what to update (content.config, live.config), where to add key for private (& where to generate: https://www.are.na/developers/personal-access-tokens)
+
+
+
+
 
 The default pages use the public Arena Influences channel. They do not need an Are.na token.
 

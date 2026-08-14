@@ -13,8 +13,16 @@ const label = data.title || `${data.type} ${data.id}`;
 const Tag = href ? "a" : "article";
 ---
 
-<Tag class="card" href={href}>
-  {image && <img src={image} alt={("image" in data && data.image?.alt_text) || ""} />}
-  <span class="eyebrow">{data.type} · {id}</span>
-  <h2>{label}</h2>
+<Tag class:list={["card", !image && "card--text"]} href={href}>
+  {image && (
+    <img
+      src={image}
+      alt={("image" in data && data.image?.alt_text) || ""}
+    />
+  )}
+  <div class="card__metadata">
+    <div class="card__type">{data.type}</div>
+    <div class="card__id">{id}</div>
+    <div class="card__label">{label}</div>
+  </div>
 </Tag>
