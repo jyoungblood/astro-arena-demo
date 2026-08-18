@@ -7,16 +7,19 @@ import Layout from "../components/Layout.astro";
 
 const references = await getCollection("references");
 const [channel] = await getCollection("channel");
-const title = channel?.data.resource.title ?? "Channel";
+const title = (channel?.data.resource.title ?? "Channel");
 const description = channel?.data.resource.description?.plain;
+const channelUrl = channel
+  ? `https://www.are.na/${channel.data.resource.owner.slug}/${channel.data.resource.slug}`
+  : undefined;
 ---
 
 <Layout title={title}>
   <ChannelContent
     blockHrefBase="/blocks"
+    channelHref={channelUrl}
     description={description}
     entries={references}
-    eyebrow="Static channel loader"
     title={title}
   />
 </Layout>

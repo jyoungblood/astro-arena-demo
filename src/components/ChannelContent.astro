@@ -1,6 +1,7 @@
 ---
 import type { ArenaEntryData } from "astro-arena";
 import ResourceCard from "./ResourceCard.astro";
+import ResourceHeader from "./ResourceHeader.astro";
 
 interface ChannelEntry {
   data: ArenaEntryData;
@@ -12,7 +13,7 @@ interface Props {
   class?: string;
   description?: string | undefined;
   entries: readonly ChannelEntry[];
-  eyebrow: string;
+  channelHref?: string | undefined;
   title: string;
 }
 
@@ -21,18 +22,25 @@ const {
   class: className,
   description,
   entries,
-  eyebrow,
+  channelHref,
   title,
 } = Astro.props;
 ---
 
 <section class:list={["channel-content", className]}>
-  <header class="channel-header">
-    <p class="eyebrow">{eyebrow}</p>
-    <h1>{title}</h1>
+  <ResourceHeader
+    class="channel-header"
+    href={channelHref}
+    linkLabel={`View ${title} on Are.na`}
+    title={title}
+  >
     {description && <p class="lede">{description}</p>}
-  </header>
-  <slot name="status" />
+  </ResourceHeader>
+  {Astro.slots.has("status") && (
+    <div class="channel-status">
+      <slot name="status" />
+    </div>
+  )}
   {entries.length > 0 && (
     <div class="channel-gallery">
       <div class="grid">
@@ -49,3 +57,9 @@ const {
     </div>
   )}
 </section>
+
+<style>
+  .channel-status {
+    margin-bottom: 1rem;
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<aside class:list={["annotation", className]}><slot /></aside>
+
+<style>
+  .annotation {
+    width: 100%;
+    padding: 1rem;
+    /* border: 1px solid #d49b45; */
+    background: #ffef42;
+  }
+
+  .annotation :global(p) {
+    margin: 0;
+    font-size: 0.9em;
+  }
+
+  .annotation :global(p + p) {
+    margin-top: 1rem;
+  }
+</style>

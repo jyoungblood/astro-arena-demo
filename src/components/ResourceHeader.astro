@@ -1,0 +1,51 @@
+---
+interface Props {
+  class?: string;
+  href?: string | undefined;
+  linkLabel?: string | undefined;
+  title: string;
+}
+
+const { class: className, href, linkLabel, title } = Astro.props;
+---
+
+<header class:list={["resource-header", className]}>
+  <h1 class="resource-title">
+    <span>{title}</span>
+    {href && (
+      <a
+        class="resource-link"
+        href={href}
+        target="_blank"
+        rel="noopener"
+        aria-label={linkLabel ?? `View ${title}`}
+      >↗</a>
+    )}
+  </h1>
+  <slot />
+</header>
+
+<style>
+  .resource-title {
+    margin-top: 0.6em;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .resource-title > span,
+  .resource-link {
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-start;
+  }
+
+  .resource-link {
+    margin-left: 0.2em;
+    font-size: 0.5em;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .resource-link:hover {
+    text-decoration: underline;
+  }
+</style>

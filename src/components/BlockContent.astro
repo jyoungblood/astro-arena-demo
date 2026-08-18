@@ -1,0 +1,26 @@
+---
+import type { ArenaEntryData } from "astro-arena";
+import ResourceHeader from "./ResourceHeader.astro";
+
+interface Props {
+  class?: string;
+  data: ArenaEntryData;
+  id: string;
+}
+
+const { class: className, data, id } = Astro.props;
+const image = "image" in data ? data.image?.large?.src : undefined;
+const imageAlt = ("image" in data && data.image?.alt_text) || "";
+const title = data.title || data.type;
+---
+
+<article class:list={["block-content", "content", className]}>
+  <ResourceHeader
+    href={`https://www.are.na/block/${id}`}
+    linkLabel={`View ${title} on Are.na`}
+    title={title}
+  />
+  {image && <img src={image} alt={imageAlt} />}
+  <slot />
+  <pre>{JSON.stringify(data, null, 2)}</pre>
+</article>

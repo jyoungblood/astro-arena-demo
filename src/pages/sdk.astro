@@ -2,14 +2,47 @@
 export const prerender = true;
 
 import { getCollection } from "astro:content";
+import Annotation from "../components/Annotation.astro";
 import Layout from "../components/Layout.astro";
+import ResourceHeader from "../components/ResourceHeader.astro";
 
 const [entry] = await getCollection("team");
+const user = entry?.data.resource;
+const title = user?.name ?? "Are.na user";
 ---
 
-<Layout title="Custom SDK collection">
-  <p class="eyebrow">arena.client() · custom collection</p>
-  <h1>{entry?.data.resource.name ?? "Are.na user"}</h1>
-  <p class="lede">This page uses <code>client.users.get()</code> inside <code>defineCollection()</code>.</p>
-  {entry && <pre>{JSON.stringify(entry.data.resource, null, 2)}</pre>}
+<Layout title={title}>
+  <article>
+    <ResourceHeader
+      href={user && `https://www.are.na/${user.slug}`}
+      linkLabel={`View ${title} on Are.na`}
+      title={title}
+    >
+      <Annotation>
+        <p>
+          This page uses <code>client.users.get()</code> inside <code>defineCollection()</code>.
+        </p>
+      </Annotation>
+    </ResourceHeader>
+    <div class="content user-content">
+      {user?.avatar && (
+        <img class="user-avatar" src={user.avatar} alt={`${user.name} avatar`} />
+      )}
+      {user?.bio?.html && <div class="user-bio" set:html={user.bio.html} />}
+      {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
+    </div>
+  </article>
 </Layout>
+
+<style>
+  .user-content {
+    margin-top: 1rem;
+  }
+
+  .user-avatar {
+    display: block;
+    width: min(100%, 20rem);
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+</style>

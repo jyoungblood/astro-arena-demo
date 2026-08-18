@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import { getCollection } from "astro:content";
+import Annotation from "../components/Annotation.astro";
 import ChannelContent from "../components/ChannelContent.astro";
 import Layout from "../components/Layout.astro";
 
@@ -9,15 +10,22 @@ const entries = await getCollection("privateReferences");
 const [channel] = await getCollection("privateChannel");
 const title = channel?.data.resource.title ?? "Private channel";
 const description = channel?.data.resource.description?.plain;
+const channelUrl = channel
+  ? `https://www.are.na/${channel.data.resource.owner.slug}/${channel.data.resource.slug}`
+  : "https://www.are.na";
 ---
 
 <Layout title={title}>
   <ChannelContent
+    channelHref={channelUrl}
     description={description}
     entries={entries}
-    eyebrow="Private channel loader"
     title={title}
   >
-    <p slot="status" class="notice">The build contains {entries.length} private entries. Inspect all output before deployment.</p>
+    <Annotation slot="status">
+      <p>
+        The build contains {entries.length} private entries from the channel <a href={channelUrl}>{title}</a>.
+      </p>
+    </Annotation>
   </ChannelContent>
 </Layout>

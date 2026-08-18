@@ -2,19 +2,16 @@
 export const prerender = true;
 
 import { getCollection, render } from "astro:content";
+import BlockContent from "../components/BlockContent.astro";
 import Layout from "../components/Layout.astro";
 
 const [entry] = await getCollection("featured");
 if (!entry) throw new Error("The featured block collection is empty.");
 const { Content } = await render(entry);
-const image = "image" in entry.data ? entry.data.image?.large?.src : undefined;
 ---
 
 <Layout title={entry.data.title || "Featured block"}>
-  <article class="content">
-    <p class="eyebrow">Static block loader · {entry.id}</p>
-    <h1>{entry.data.title || entry.data.type}</h1>
-    {image && <img src={image} alt={("image" in entry.data && entry.data.image?.alt_text) || ""} />}
+  <BlockContent data={entry.data} id={entry.id}>
     <Content />
-  </article>
+  </BlockContent>
 </Layout>

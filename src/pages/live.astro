@@ -1,5 +1,6 @@
 ---
 import { getLiveCollection } from "astro:content";
+import Annotation from "../components/Annotation.astro";
 import ChannelContent from "../components/ChannelContent.astro";
 import Layout from "../components/Layout.astro";
 
@@ -9,16 +10,20 @@ const liveEntries = entries ?? [];
 
 <Layout title="Live channel">
   <ChannelContent
+    channelHref="https://www.are.na/are-na-team/arena-influences"
     entries={liveEntries}
-    eyebrow="Live channel loader"
     title="Request-time references"
   >
-    {!error && (
-      <p slot="status" class="lede">The server loaded {liveEntries.length} entries. Cache tags: {cacheHint?.tags?.join(", ") ?? "none"}</p>
-    )}
-    <p slot="status">
-      Astro loads this collection on the server for each request. It does not run in browser JavaScript. This route requires on-demand rendering and a server adapter. <a href="https://docs.astro.build/en/guides/content-collections/#live-content-collections">Read the Astro live content guide.</a>
-    </p>
-    {error && <p slot="status" class="notice">{error.message}</p>}
+    <Annotation slot="status">
+      {!error && (
+        <p>
+          The server loaded {liveEntries.length} entries. Cache tags: {cacheHint?.tags?.join(", ") ?? "none"}
+        </p>
+      )}
+      <p>
+        Astro loads this collection on the server for each request. It does not run in browser JavaScript. This route requires on-demand rendering and a server adapter. <a href="https://docs.astro.build/en/guides/content-collections/#live-content-collections">Read the Astro live content guide.</a>
+      </p>
+      {error && <p>{error.message}</p>}
+    </Annotation>
   </ChannelContent>
 </Layout>
