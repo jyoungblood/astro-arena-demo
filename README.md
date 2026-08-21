@@ -13,7 +13,7 @@ npm run dev
 
 
 
-note what to update (content.config, live.config), where to add key for private (& where to generate: https://www.are.na/developers/personal-access-tokens)
+** TODO note what to update (content.config, live.config), where to add key for private (& where to generate: https://www.are.na/developers/personal-access-tokens) **
 
 
 
