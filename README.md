@@ -1,6 +1,6 @@
-# astro-arena playground
+# astro-arena demo
 
-This Astro 7 application 
+This Astro 7 application demonstrates how to implement the 
 
 ## Install
 
@@ -19,7 +19,6 @@ note what to update (content.config, live.config), where to add key for private 
 
 
 
-The default pages use the public Arena Influences channel. They do not need an Are.na token.
 
 ## Pages
 

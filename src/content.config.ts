@@ -9,7 +9,7 @@ const client = arena.client();
 const references = defineCollection({
   loader: arena.channel({
     url: CHANNEL_URL,
-    query: { page: 1, per: 60, sort: "position_desc" },
+    query: { page: 1, per: 60 },
     includeChannels: true,
   }),
 });
