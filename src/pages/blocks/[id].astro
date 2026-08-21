@@ -1,25 +1,44 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
-import { getCollection, render, type CollectionEntry } from "astro:content";
+import { getEntry, getLiveEntry, render } from "astro:content";
 import BlockContent from "../../components/BlockContent.astro";
 import Layout from "../../components/Layout.astro";
 
-export async function getStaticPaths() {
-  const entries = await getCollection("references", ({ data }) => data.type !== "Channel");
-  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+const id = Astro.params.id;
+if (!id) {
+  throw new Error("A block ID is required.");
 }
 
-interface Props {
-  entry: CollectionEntry<"references">;
+const staticEntry =
+  await getEntry("references", id) ??
+  await getEntry("privateReferences", id);
+const liveResult = staticEntry
+  ? undefined
+  : await getLiveEntry("liveReferences", id);
+
+if (liveResult?.error) {
+  throw liveResult.error;
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const entry = staticEntry ?? liveResult?.entry;
+if (!entry) {
+  Astro.response.status = 404;
+}
+
+const rendered = entry ? await render(entry) : undefined;
+const Content = rendered?.Content;
 ---
 
-<Layout title={entry.data.title || `Block ${entry.id}`}>
-  <BlockContent data={entry.data} id={entry.id}>
-    <Content />
-  </BlockContent>
+<Layout title={entry?.data.title || `Block ${id}`}>
+  {entry ? (
+    <BlockContent data={entry.data} id={entry.id}>
+      {Content && <Content />}
+    </BlockContent>
+  ) : (
+    <div class="content">
+      <h1>Block not found</h1>
+      <p>No block with ID {id} was found in the demo collections.</p>
+    </div>
+  )}
 </Layout>

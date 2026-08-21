@@ -46,8 +46,35 @@ const { title } = Astro.props;
       nav {
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
         gap: 0.8rem;
         font-size: 0.9rem;
+      }
+      nav a {
+        display: inline-flex;
+        align-items: center;
+        text-decoration-thickness: from-font;
+        text-underline-offset: 0.12em;
+      }
+      nav a:hover,
+      nav a:focus-visible {
+        background: #161616;
+        color: #fff;
+        text-decoration: none;
+      }
+      nav a:focus-visible {
+        outline: 2px solid #161616;
+        outline-offset: 2px;
+      }
+      .nav-logo img {
+        display: block;
+        width: auto;
+        height: 1em;
+        transform: translateY(1px);
+      }
+      .nav-logo:hover img,
+      .nav-logo:focus-visible img {
+        filter: invert(1);
       }
       /* main { padding: 3rem 0 6rem; } */
       h1 {
@@ -97,7 +124,7 @@ const { title } = Astro.props;
         grid-template-rows: auto 1fr auto;
         gap: 0.5rem;
         padding: clamp(0.5rem, 1vw, 1rem);
-        background: rgb(72 72 72 / 0.72);
+        background: rgb(72 72 72 / 0.5);
         opacity: 0;
         /* transition: opacity 160ms ease-out; */
       }
@@ -112,13 +139,14 @@ const { title } = Astro.props;
       }
       .card--text .card__metadata {
         opacity: 1;
+        background: rgb(0,0,0);
       }
       .card__type,
       .card__id {
         color: eee;
         font-size: 0.625rem;
         line-height: 1;
-        letter-spacing: 0.06em;
+        /* letter-spacing: 0.06em; */
         text-transform: uppercase;
       }
       .card__id {
@@ -244,16 +272,20 @@ const { title } = Astro.props;
     <header>
       <div></div>
       <nav aria-label="Main navigation">
+        <a
+          class="nav-logo"
+          href="https://github.com/jyoungblood/astro-arena"
+          target="_blank"
+          rel="noopener"
+          aria-label="GitHub repository"
+        >
+          <img src="/astro-arena.svg" alt="" />
+        </a>
         <a href="/">Channel</a>
         <a href="/block">Block</a>
         <a href="/live">Live</a>
         <a href="/sdk">SDK</a>
         <a href="/private">Private</a>
-        <a
-          href="https://github.com/jyoungblood/astro-arena"
-          target="_blank"
-          rel="noopener">GitHub ↗</a
-        >
       </nav>
     </header>
     <main>
