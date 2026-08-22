@@ -15,8 +15,8 @@ importers:
         specifier: 7.2.1
         version: 7.2.1(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0)
       astro-arena:
-        specifier: link:../astro-arena
-        version: link:../astro-arena
+        specifier: ^0.1.0
+        version: 0.1.0(astro@7.2.1(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0))
     devDependencies:
       '@astrojs/check':
         specifier: 0.9.10
@@ -26,6 +26,10 @@ importers:
         version: 5.9.3
 
 packages:
+
+  '@aredotna/sdk@0.1.1':
+    resolution: {integrity: sha512-muMiX4Wvw1oW9zvnGaP/V6J1tDLpnEvcsClmRB1yq+E9JqqynyahrS7cBPsuq44lG1tlPLeUwp6u4Z+8JiKhew==}
+    engines: {node: '>=20'}
 
   '@astrojs/check@0.9.10':
     resolution: {integrity: sha512-zgx/UQMozdjOa3bOxjgeCFdtpE3c9rRX6xHwa+2QXvy8z8Akifu2AtubHyv/zzC2znO8dl8fFWL4K+Ba9kS8HQ==}
@@ -793,6 +797,12 @@ packages:
     resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
     engines: {node: '>= 0.4'}
 
+  astro-arena@0.1.0:
+    resolution: {integrity: sha512-SUTn5nm5/wqfxKcCl1QaF0fiYNy/Ts4/2ScTzriGCoQ82oM+ZkoCI4YrHjRkfTLQLL4OmK+B5zzvYq5zb5KvNw==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      astro: ^6.0.0 || ^7.0.0
+
   astro@7.2.1:
     resolution: {integrity: sha512-ynyMTiyF//GLcd8+gRNbvcKgS1ht+qTgp/fkkHIpGYNILLseQqQRuPZ9PqXYKfsact4J1emZaXRDpg2bl35Pag==}
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
@@ -1313,6 +1323,10 @@ packages:
     resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
     engines: {node: '>=12'}
 
+  pkce-challenge@6.0.0:
+    resolution: {integrity: sha512-KrEAOa2aGlEyV+gN2jMXwSQhZ5gUR4WwivtPjSktYzh7srb70pYvVGV0uLfmoCx75fUQtqTairuoxayHLtvo9w==}
+    engines: {node: '>=16.20.0'}
+
   postcss@8.5.26:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -1791,6 +1805,10 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
+
+  '@aredotna/sdk@0.1.1':
+    dependencies:
+      pkce-challenge: 6.0.0
 
   '@astrojs/check@0.9.10(prettier@3.9.6)(typescript@5.9.3)':
     dependencies:
@@ -2429,6 +2447,11 @@ snapshots:
 
   aria-query@5.3.2: {}
 
+  astro-arena@0.1.0(astro@7.2.1(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0)):
+    dependencies:
+      '@aredotna/sdk': 0.1.1
+      astro: 7.2.1(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0)
+
   astro@7.2.1(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0):
     dependencies:
       '@astrojs/compiler-rs': 0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
@@ -2996,6 +3019,8 @@ snapshots:
   picomatch@2.3.2: {}
 
   picomatch@4.0.5: {}
+
+  pkce-challenge@6.0.0: {}
 
   postcss@8.5.26:
     dependencies:
