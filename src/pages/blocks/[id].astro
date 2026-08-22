@@ -1,44 +1,40 @@
 ---
-export const prerender = false;
-
-import { getEntry, getLiveEntry, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BlockContent from "../../components/BlockContent.astro";
 import Layout from "../../components/Layout.astro";
 
-const id = Astro.params.id;
-if (!id) {
-  throw new Error("A block ID is required.");
+type BlockEntry =
+  | CollectionEntry<"liveSnapshot">
+  | CollectionEntry<"privateReferences">
+  | CollectionEntry<"references">;
+
+export async function getStaticPaths() {
+  const collections = await Promise.all([
+    getCollection("references"),
+    getCollection("privateReferences"),
+    getCollection("liveSnapshot"),
+  ]);
+  const entries = new Map<string, BlockEntry>();
+
+  for (const collection of collections) {
+    for (const entry of collection) {
+      entries.set(entry.id, entry);
+    }
+  }
+
+  return Array.from(entries.values(), (entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
 }
 
-const staticEntry =
-  await getEntry("references", id) ??
-  await getEntry("privateReferences", id);
-const liveResult = staticEntry
-  ? undefined
-  : await getLiveEntry("liveReferences", id);
-
-if (liveResult?.error) {
-  throw liveResult.error;
-}
-
-const entry = staticEntry ?? liveResult?.entry;
-if (!entry) {
-  Astro.response.status = 404;
-}
-
-const rendered = entry ? await render(entry) : undefined;
-const Content = rendered?.Content;
+const { entry } = Astro.props as { entry: BlockEntry };
+const { Content } = await render(entry);
 ---
 
-<Layout title={entry?.data.title || `Block ${id}`}>
-  {entry ? (
-    <BlockContent data={entry.data} id={entry.id}>
-      {Content && <Content />}
-    </BlockContent>
-  ) : (
-    <div class="content">
-      <h1>Block not found</h1>
-      <p>No block with ID {id} was found in the demo collections.</p>
-    </div>
-  )}
+<Layout title={entry.data.title || `Block ${entry.id}`}>
+  <BlockContent data={entry.data} id={entry.id}>
+    <Content />
+  </BlockContent>
 </Layout>

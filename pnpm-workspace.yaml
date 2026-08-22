@@ -1,6 +1,5 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@astrojs/node@11.1.1'
   - astro@7.2.1
   - astro-arena@0.1.0

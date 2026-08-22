@@ -2,6 +2,7 @@ import { defineCollection } from "astro:content";
 import { arena } from "astro-arena";
 
 const CHANNEL_URL = "https://www.are.na/j-youngblood/posters-ugpnnka-71q";
+const LIVE_CHANNEL_URL = "https://www.are.na/are-na-team/arena-influences";
 const PRIVATE_CHANNEL_URL = "https://www.are.na/j-youngblood/hidden-in-plain-sight-bnv6cgnuurq";
 
 const client = arena.client();
@@ -10,6 +11,15 @@ const references = defineCollection({
   loader: arena.channel({
     url: CHANNEL_URL,
     query: { page: 1, per: 60 },
+    includeChannels: true,
+  }),
+});
+
+// Static Pages counterpart to liveReferences in live.config.ts.
+const liveSnapshot = defineCollection({
+  loader: arena.channel({
+    url: LIVE_CHANNEL_URL,
+    query: { page: 1, per: 12, sort: "position_desc" },
     includeChannels: true,
   }),
 });
@@ -49,6 +59,7 @@ const privateReferences = defineCollection({
 export const collections = {
   channel,
   featured,
+  liveSnapshot,
   privateChannel,
   privateReferences,
   references,

@@ -3,13 +3,16 @@
   "private": true,
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "build": "astro build",
     "check": "astro check",
-    "dev": "astro dev"
+    "dev": "astro dev",
+    "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/node": "11.1.1",
     "astro": "7.2.1",
     "astro-arena": "^0.1.0"
   },

@@ -1,30 +1,26 @@
 ---
-import { getLiveCollection } from "astro:content";
+import { getCollection } from "astro:content";
 import Annotation from "../components/Annotation.astro";
 import ChannelContent from "../components/ChannelContent.astro";
 import Layout from "../components/Layout.astro";
 
-const { entries, error, cacheHint } = await getLiveCollection("liveReferences", { page: 1 });
-const liveEntries = entries ?? [];
+const entries = await getCollection("liveSnapshot");
 ---
 
-<Layout title="Live channel">
+<Layout title="Live collection example">
   <ChannelContent
     blockHrefBase="/blocks"
     channelHref="https://www.are.na/are-na-team/arena-influences"
-    entries={liveEntries}
-    title="Request-time references"
+    entries={entries}
+    title="Build-time snapshot"
   >
     <Annotation slot="status">
-      {!error && (
-        <p>
-          The server loaded {liveEntries.length} entries. Cache tags: {cacheHint?.tags?.join(", ") ?? "none"}
-        </p>
-      )}
       <p>
-        Astro loads this collection on the server for each request. It does not run in browser JavaScript. This route requires on-demand rendering and a server adapter. <a href="https://docs.astro.build/en/guides/content-collections/#live-content-collections">Read the Astro live content guide.</a>
+        This static demo loaded {entries.length} entries during the build. Cloudflare Pages serves the generated HTML and does not request Are.na data when you open this page.
       </p>
-      {error && <p>{error.message}</p>}
+      <p>
+        The <code>src/live.config.ts</code> file shows the live collection configuration. In an SSR application, <code>getLiveCollection()</code> loads current data for each request. Live output requires on-demand rendering and an adapter, so this Pages demo does not display it. <a href="https://docs.astro.build/en/guides/content-collections/#live-content-collections">Read the Astro live content guide.</a>
+      </p>
     </Annotation>
   </ChannelContent>
 </Layout>
