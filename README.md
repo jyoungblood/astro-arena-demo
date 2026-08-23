@@ -1,5 +1,5 @@
 <p align="center">
-![Astro + Are.na](./public/astro-arena.svg)
+  <img src="./public/astro-arena.svg" alt="Astro + Are.na">
 </p>
 
 # astro-arena demo
