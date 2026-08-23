@@ -1,9 +1,9 @@
 import { defineCollection } from "astro:content";
 import { arena } from "astro-arena";
+import { privateChannel, privateReferences } from "./private.config";
 
 const CHANNEL_URL = "https://www.are.na/j-youngblood/posters-ugpnnka-71q";
 const LIVE_CHANNEL_URL = "https://www.are.na/are-na-team/arena-influences";
-const PRIVATE_CHANNEL_URL = "https://www.are.na/j-youngblood/hidden-in-plain-sight-bnv6cgnuurq";
 
 const client = arena.client();
 
@@ -40,20 +40,6 @@ const team = defineCollection({
     const user = await client.users.get("charles-broskoski");
     return [{ id: `user:${user.id}`, resource: user }];
   },
-});
-
-const privateChannel = defineCollection({
-  loader: async () => {
-    const resource = await client.channels.get(new URL(PRIVATE_CHANNEL_URL).pathname.split("/").filter(Boolean).at(-1) ?? PRIVATE_CHANNEL_URL);
-    return [{ id: `channel:${resource.id}`, resource }];
-  },
-});
-
-const privateReferences = defineCollection({
-  loader: arena.channel({
-    url: PRIVATE_CHANNEL_URL,
-    query: { page: 1, per: 12 },
-  }),
 });
 
 export const collections = {

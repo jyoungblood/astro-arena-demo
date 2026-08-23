@@ -5,9 +5,10 @@ import { getCollection } from "astro:content";
 import Annotation from "../components/Annotation.astro";
 import ChannelContent from "../components/ChannelContent.astro";
 import Layout from "../components/Layout.astro";
+import { privateConfiguration } from "../private.config";
 
-const entries = await getCollection("privateReferences");
-const [channel] = await getCollection("privateChannel");
+const entries = privateConfiguration ? await getCollection("privateReferences") : [];
+const [channel] = privateConfiguration ? await getCollection("privateChannel") : [];
 const title = channel?.data.resource.title ?? "Private channel";
 const description = channel?.data.resource.description?.plain;
 const channelUrl = channel
@@ -24,9 +25,15 @@ const channelUrl = channel
     title={title}
   >
     <Annotation slot="status">
-      <p>
-        The build contains {entries.length} private entries from the channel <a href={channelUrl}>{title}</a>.
-      </p>
+      {channel ? (
+        <p>
+          The build contains {entries.length} private entries from the channel <a href={channelUrl}>{title}</a>.
+        </p>
+      ) : (
+        <p>
+          The private example is inactive. Add <code>ARENA_BEARER_TOKEN</code> to <code>.env</code> to enable it.
+        </p>
+      )}
     </Annotation>
   </ChannelContent>
 </Layout>

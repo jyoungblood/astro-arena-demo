@@ -1,3 +1,7 @@
+<p align="center">
+![Astro + Are.na](./public/astro-arena.svg)
+</p>
+
 # astro-arena demo
 
 This Astro 7 application shows the build-time and live loaders from [`astro-arena`](https://github.com/jyoungblood/astro-arena).
@@ -6,7 +10,7 @@ The deployed demo is a static site. Astro loads the Are.na content during each b
 
 ## Local development
 
-Use Node.js 22.12 or a later version.
+Use Node.js 22.12 or a newer version.
 
 ```sh
 npx degit jyoungblood/astro-arena-demo .
@@ -37,15 +41,17 @@ Read the [Astro live content guide](https://docs.astro.build/en/guides/content-c
 - `/blocks/:id` contains static detail pages that Astro creates with `getStaticPaths()`.
 - `/live` displays a build-time snapshot and explains the live collection process.
 - `/sdk` uses `arena.client()` inside `defineCollection()`.
-- `/private` displays the configured private channel from the build-time store.
+- `/private` displays setup instructions or a configured private channel.
 
 ## Private content
 
 Create an [Are.na personal access token](https://www.are.na/developers/personal-access-tokens). The token must have access to the private channel.
 
-Set the private channel URL in `src/content.config.ts`.
+The private collections are inactive unless `ARENA_BEARER_TOKEN` contains a value.
 
-For local development, copy `.env.example` to `.env`. Then add the token to `ARENA_BEARER_TOKEN`.
+For local development, copy `.env.example` to `.env`.
+
+Set `ARENA_BEARER_TOKEN` to the personal access token. To select another channel, change `CHANNEL_URL` in `src/private.config.ts`.
 
 Do not commit `.env`. The loader does not include the token in browser code.
 
