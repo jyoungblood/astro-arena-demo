@@ -61,3 +61,5 @@ NOTE: A static build makes its rendered content public. Any content in `/private
 ## License
 
 This demo is available under the [MIT License](./LICENSE).
+
+Made with ♥️ by [J Youngblood](https://www.are.na/j-youngblood)
